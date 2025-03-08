@@ -13,9 +13,9 @@ def mushrooms_classifing():
         
         json_data = request.json
         #print("received data:",json_data)
-        json_dict = json.loads(json_data)
+        #json_dict = json.loads(json_data)
         #json_int = {k:int(v) for k,v in json_dict.items()}
-        df = pd.DataFrame(json_dict)
+        df = pd.DataFrame(json_data)
         df_dummies = pd.get_dummies(df)
         pca_data = pca.transform(df_dummies)
         prediction = model.predict(pca_data)
