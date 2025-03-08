@@ -10,13 +10,14 @@ def mushrooms_classifing():
     if request.method == "POST":
         model = joblib.load("mushrooms_cls.pkl")
         pca = joblib.load("pca.pkl")
-        
+        raw = pd.read_csv("mushrooms.csv")
+        raw_dummies = pd.get_dummies(raw)
         json_data = request.json
         #print("received data:",json_data)
         #json_dict = json.loads(json_data)
         #json_int = {k:int(v) for k,v in json_dict.items()}
         df = pd.DataFrame(json_data)
-        df_dummies = pd.get_dummies(df)
+        df_dummies = pd.get_dummies(df).reindex(columns=raw_dummies.columns,fill_value=0)
         pca_data = pca.transform(df_dummies)
         prediction = model.predict(pca_data)
         
