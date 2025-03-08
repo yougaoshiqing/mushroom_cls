@@ -11,7 +11,7 @@ def mushrooms_classifing():
         model = joblib.load("mushrooms_cls.pkl")
         pca = joblib.load("pca.pkl")
         raw = pd.read_csv("mushrooms.csv")
-        raw_X = raw.drop("class")
+        raw_X = raw.drop("class",axis=1)
         raw_dummies = pd.get_dummies(raw_X)
         json_data = request.json
         #print("received data:",json_data)
